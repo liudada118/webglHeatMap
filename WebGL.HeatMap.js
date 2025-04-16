@@ -168,8 +168,8 @@ WebGLCanvas.prototype.bufferCuter = function (arr) {
 
 WebGLCanvas.prototype.createTplCanvas = function (cfg, data) {
 
-    // var tplCanvas = document.createElement("canvas");
-    var tplCanvas = document.getElementById(cfg.class)
+    var tplCanvas = document.createElement("canvas");
+    // var tplCanvas = document.getElementById(cfg.class)
 
     // glObj存储一些数据
     tplCanvas.glObj = {
@@ -458,9 +458,9 @@ WebGLCanvas.prototype.getNearPower = function (num) {
 
 
 WebGLCanvas.prototype.render = function (cfg, data) {
-    console.log(cfg)
-    // cfg.width = this.getNearPower(cfg.width);
-    // cfg.height = this.getNearPower(cfg.height);
+
+    cfg.width = this.getNearPower(cfg.width);
+    cfg.height = this.getNearPower(cfg.height);
 
     var canvasQueue = [];
     var cutedData = this.dataCuter(cfg, data, 0);
