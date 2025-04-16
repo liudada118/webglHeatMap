@@ -386,25 +386,25 @@
                 const bodyCavnas = document.getElementById(id)
                 let data
                 const cfg = {
-                    width: 1024,
-                    height: 2048,
+                    width: 32,
+                    height: 64,
                     dataWidth: 24,
                     dataHeight: 24,
                     interp1: 1,
                     interp2: 2,
                     order: 2,
-                    radius: 80
+                    radius: 2.5
                 }
 
                 if (!id.includes('body')) {
-                    cfg.width = 512
-                    cfg.height = 512
-                    cfg.dataWidth = 24
-                    cfg.dataHeight = 24
+                    cfg.width = 64
+                    cfg.height = 64
+                    cfg.dataWidth = 4
+                    cfg.dataHeight = 4
                     cfg.interp1 = 1
                     cfg.interp2 = 4
                     cfg.order = 2
-                    cfg.radius = 200
+                    cfg.radius = 25
                 }
 
                 if (id.includes('body')) {
