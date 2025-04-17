@@ -131,7 +131,7 @@ WebGLCanvas.bufferCuter = function(arr) {
 
 }
 
-WebGLCanvas.createTplCanvas = function(cfg, data) {
+WebGLCanvas.createTplCanvas = function(cfg, data ) {
 
     var tplCanvas = document.createElement("canvas");
 
@@ -393,7 +393,7 @@ WebGLCanvas.getNearPower=function(num){
 }
 
 
-WebGLCanvas.render=function(cfg,data){
+WebGLCanvas.render=function(cfg,data,id){
     cfg.width=WebGLCanvas.getNearPower(cfg.width);
     cfg.height=WebGLCanvas.getNearPower(cfg.height);
 
@@ -401,7 +401,7 @@ WebGLCanvas.render=function(cfg,data){
     var cutedData = WebGLCanvas.dataCuter(cfg,data, 30);
     for (var i in cutedData) {
         var bufferChip = WebGLCanvas.bufferCuter(cutedData[i]);
-        var canvas = WebGLCanvas.createTplCanvas(cfg, bufferChip);
+        var canvas = WebGLCanvas.createTplCanvas(cfg, bufferChip,id);
         canvasQueue.push(canvas);
     }
     return canvasQueue;

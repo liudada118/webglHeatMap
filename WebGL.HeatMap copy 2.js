@@ -1,5 +1,3 @@
-var canvasMap = {}
-
 class WebGLCanvas {
     constructor() {
         this.vertexShader = "\
@@ -140,22 +138,16 @@ class WebGLCanvas {
 
 
 WebGLCanvas.prototype.bufferCuter = function (arr) {
-
     var buffers = [];
-    // var _ cur;
+    var _cur;
     // 把arr按照长度每3000 分割一下
-    // _cur = arr.splice(0, 3000);
-    // while (_cur.length > 0) {
-    //     buffers.push(_cur);
-    //     _cur = arr.splice(0, 3000);
-    // }
- 
-    const _cur = arr.splice(0, 1568);
-    // const _cur1 = arr.splice(1568, 1568 + 256);
-    // const _cur2 = arr.splice(1568 + 256, 1568 + 256 + 256);
-    // buffers.push(_cur,_cur1 ,_cur2)
+    _cur = arr.splice(0, 3000);
+    while (_cur.length > 0) {
+        buffers.push(_cur);
+        _cur = arr.splice(0, 3000);
+    }
 
-    // 将每个3000数 转化为float数组  // 1568 +256 +256 
+    // 将每个3000数 转化为float数组
     for (var i in buffers) {
         var d = [];
         var j = 0;
@@ -174,13 +166,10 @@ WebGLCanvas.prototype.bufferCuter = function (arr) {
 
 }
 
-WebGLCanvas.prototype.createTplCanvas = function (cfg, data, i) {
-    var tplCanvas
-    if (!canvasMap[i]) {
-        canvasMap[i] = document.createElement("canvas");
-    }
-    var tplCanvas = canvasMap[i]
-    // var tplCanvas = document.getElementById(cfg.class)
+WebGLCanvas.prototype.createTplCanvas = function (cfg, data) {
+
+    // var tplCanvas = document.crea teElement("canvas");
+    var tplCanvas = document.getElementById(cfg.class)
 
     // glObj存储一些数据
     tplCanvas.glObj = {
@@ -468,36 +457,18 @@ WebGLCanvas.prototype.getNearPower = function (num) {
 }
 
 
-WebGLCanvas.prototype.render = function (cfg, data, id) {
-    
-
-    const _cur = data.splice(0, 1568);
-    const _cur1 = data.splice(0,  256);
-    const _cur2 = data.splice(0,  256);
-    // cfg.width = this.getNear 
-    
-    var canvasQueue = [];
-    var cutedData = this.dataCuter(cfg[0], _cur, 0);
-    var cutedData1 = this.dataCuter(cfg[1], _cur1, 0);
-    var cutedData2 = this.dataCuter(cfg[1], _cur2, 0);
-    // var cutedData = [...data]
-    // cutedData = data
+WebGLCanvas.prototype.render = function (cfg, data) {
    
+    cfg.width = this.getNearPower(cfg.width);
+    cfg.height = this.getNearPower(cfg.height);
+
+    var canvasQueue = [];
+    var cutedData = this.dataCuter(cfg, data, 0);
+    // console.log(cutedData)
     for (var i in cutedData) {
+      
         var bufferChip = this.bufferCuter(cutedData[i]);
-        var canvas = this.createTplCanvas(cfg[0 ], bufferChip, `${id}` + i);
-        canvasQueue.push(canvas);
-    }
-
-    for (var i in cutedData1) {
-        var bufferChip = this.bufferCuter(cutedData[i]);
-        var canvas = this.createTplCanvas(cfg[1 ], bufferChip, `${id}` + i);
-        canvasQueue.push(canvas);
-    }
-
-    for (var i in cutedData2) {
-        var bufferChip = this.bufferCuter(cutedData[i]);
-        var canvas = this.createTplCanvas(cfg[1 ], bufferChip, `${id}` + i);
+        var canvas = this.createTplCanvas(cfg, bufferChip);
         canvasQueue.push(canvas);
     }
     return canvasQueue;
