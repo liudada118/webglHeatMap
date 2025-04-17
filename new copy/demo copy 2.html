@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>基于webgl的热力图</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        canvas {
+            margin-top: -3px
+        }
+
+        button {
+            position: absolute;
+            width: 158px;
+            height: 69px;
+        }
+    </style>
+</head>
+
+<body style="background: #000;">
+    <input type="range" id="range">
+    <button id="btn">点击改变参数</button>
+    <div style="display: flex;">
+        <div style="position: relative; width:400px;">
+
+            <img id="img" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right"></canvas>
+        </div>
+
+        <div style="position: relative; width:400px;">
+
+            <img id="img1" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left1"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body1"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right1"></canvas>
+        </div>
+
+        <div style="position: relative; width:400px;">
+
+            <img id="img2" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left2"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body2"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right2"></canvas>
+        </div>
+
+        <div style="position: relative; width:400px;">
+
+            <img id="img3" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left3"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body3"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right3"></canvas>
+        </div>
+
+        <div style="position: relative; width:400px;">
+
+            <img id="img4" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left4"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body4"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right4"></canvas>
+        </div>
+
+        <div style="position: relative; width:400px;">
+
+            <img id="img5" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left5"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body5"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right5"></canvas>
+        </div>
+
+        <div style="position: relative; width:400px;">
+
+            <img id="img6" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left6"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body6"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right6"></canvas>
+        </div>
+
+        <div style="position: relative; width:400px;">
+
+            <img id="img7" style="width: 100%; " src='./img/body2.png' alt="">
+            <canvas style="width: 10%; position: absolute; left: 10.5%; top: 30%;
+        transform: rotateZ(26deg) ; 
+         opacity: 1" id="left7"></canvas>
+            <canvas
+                style="width: 42%;height: 50%; position: absolute; transform: translate(-50%) scale(1,1.375); left: 51.3%;  top: 12%; opacity: 1"
+                id="body7"></canvas>
+            <canvas style="width: 10%;position: absolute; left: 80.5%; top: 30%;
+    transform: rotateZ(-26deg) ;
+     opacity: 1" id="right7"></canvas>
+        </div>
+    </div>
+
+  
+    <!-- <canvas id="body"></canvas>
+    <canvas id="left"></canvas>
+    <canvas id="right"></canvas> -->
+    <script type="text/javascript" src="WebGL.HeatMap copy 2.js"></script>
+    <script type="text/javascript">
+        const bodyCavnas = document.getElementById('body')
+        const leftCavnas = document.getElementById('left')
+        const rightCavnas = document.getElementById('right')
+
+
+        function addSide(arr, width, height, wnum, hnum, sideNum) {
+            const narr = new Array(height);
+            const res = [];
+            for (let i = 0; i < height; i++) {
+                narr[i] = [];
+
+                for (let j = 0; j < width; j++) {
+                    if (j == 0) {
+                        narr[i].push(
+                            ...new Array(wnum).fill(sideNum >= 0 ? sideNum : 1),
+                            arr[i * width + j]
+                        );
+                    } else if (j == width - 1) {
+                        narr[i].push(
+                            arr[i * width + j],
+                            ...new Array(wnum).fill(sideNum >= 0 ? sideNum : 1)
+                        );
+                    } else {
+                        narr[i].push(arr[i * width + j]);
+                    }
+                }
+            }
+            for (let i = 0; i < height; i++) {
+                res.push(...narr[i]);
+            }
+
+            return [
+                ...new Array(hnum * (width + 2 * wnum)).fill(sideNum >= 0 ? sideNum : 1),
+                ...res,
+                ...new Array(hnum * (width + 2 * wnum)).fill(sideNum >= 0 ? sideNum : 1),
+            ];
+        }
+
+
+        function interpSmall(smallMat, width, height, interp1, interp2) {
+
+            const bigMat = new Array((width * interp1) * (height * interp2)).fill(0)
+            for (let i = 0; i < height; i++) {
+                for (let j = 0; j < width; j++) {
+                    bigMat[(width * interp1) * i * interp2 + (j * interp1)] = smallMat[i * width + j]
+                    bigMat[(width * interp1) * (i * interp2 + 1) + (j * interp1)] = smallMat[i * width + j]
+                    if (interp2 > 2) {
+                        bigMat[(width * interp1) * (i * interp2 + 2) + (j * interp1)] = smallMat[i * width + j]
+                        bigMat[(width * interp1) * (i * interp2 + 3) + (j * interp1)] = smallMat[i * width + j]
+                    }
+
+
+                    // for(let k = 0 ; k < interp2 ; k++){
+                    //     const diff = smallMat[(i + 1) * width + j] ? smallMat[(i + 1) * width + j] - smallMat[i * width + j] : 0
+                    //     bigMat[(width * interp1) * (i * interp2 + k) + (j * interp1)] = (smallMat[i * width + j] + diff * (k+1) / interp2 )* 5
+                    //     // bigMat[(width * interp1) * (i * interp2 + k) + (j * interp1)] = (smallMat[i * width + j] + smallMat[(i + 1) * width + j] ? smallMat[(i + 1) * width + j] :  ) * (k+1) / interp2 * 5
+                    // // bigMat[(width * interp1) * (i * interp2 + 1) + (j * interp1)] = smallMat[i * width + j] * 10
+                    // }
+                }
+            }
+
+            // console.log(bigMat.length)
+            return bigMat
+        }
+
+        var fackData = [];
+        // for (var i = 0; i < 10000; i++) {
+        //     fackData.push([Math.random() * 2048, Math.random() * 900, Math.floor(Math.random() * 600)]);
+        // }
+        const pointArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 20, 152, 19, 7, 0, 0, 0, 11, 84, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 34, 21, 0, 0, 0, 0, 0, 0, 9, 40, 0, 62, 56, 50, 0, 0, 0, 8, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 5, 0, 0, 0, 0, 0, 42, 36, 0, 43, 41, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 21, 0, 18, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 44, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 58, 31, 5, 0, 0, 0, 6, 20, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 64, 56, 29, 0, 0, 12, 49, 40, 85, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 34, 33, 27, 0, 37, 53, 50, 21, 3, 52, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 30, 53, 0, 55, 33, 27, 0, 0, 0, 27, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 58, 0, 6, 0, 0, 0, 0, 0, 0, 0, 79, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 97, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 14, 0, 0, 0, 31, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 8, 0, 0, 12, 41, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 13, 8, 0, 0, 33, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43, 10, 0, 5, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 13, 11, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]     //     // fackData.push([Math.random() * 2048, Math.random() * 900, Math.floor(Math.random() * 600)]);
+        // }
+
+        const props = {}
+        props.data = new Array(1024).fill(50)
+
+        let handLeft = props.data.slice(0, 16)
+
+        let handRight = props.data.slice(16, 32)
+
+        // let body = props.data.slice(32, 32 + 24 * 24)
+        // let handLeft = new Array(16).fill(100)
+        // let handRight = new Array(16).fill(100)
+        // const body = new Array(24*24).fill(100)
+
+
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 4; j++) {
+                [handLeft[i * 4 + j], handLeft[(3 - i) * 4 + j]] = [handLeft[(3 - i) * 4 + j], handLeft[i * 4 + j],]
+            }
+        }
+        let neck = props.data.slice(32, 32 + 24 * 5)
+        let back = props.data.slice(32 + 24 * 5, 32 + 24 * 14)
+        let sit = props.data.slice(32 + 24 * 14, 32 + 24 * 24)
+
+
+        const body = [...neck, ...back, ...sit,]
+
+        // const filterArr = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [4, 0], [4, 1], [0, 18], [0, 19], [0, 20], [0, 21], [0, 22], [0, 23], [1, 16], [1, 17], [1, 18], [1, 19], [1, 20], [1, 21], [1, 22], [1, 23], [2, 16], [2, 17], [2, 18], [2, 19], [2, 20], [2, 21], [2, 22], [2, 23], [3, 18], [3, 19], [3, 20], [3, 21], [3, 22], [3, 23], [4, 22], [4, 23], [9, 0], [10, 0], [10, 1], [11, 0], [11, 1], [12, 0], [12, 1], [12, 2], [13, 0], [13, 1], [13, 2], [14, 0], [14, 1], [15, 0], [15, 1], [16, 0], [17, 0], [16, 1], [9, 23], [10, 23], [10, 22], [11, 22], [11, 23], [11, 21], [12, 21], [12, 22], [12, 23], [13, 21], [13, 22], [13, 23], [14, 21], [14, 22], [14, 23], [15, 22], [15, 23], [16, 22], [16, 23], [17, 23], [18, 23], [19, 23], [20, 23], [18, 0], [19, 0], [20, 11], [20, 12], [21, 11], [21, 12], [22, 11], [22, 12], [23, 10], [23, 11], [23, 12], [23, 13]]
+
+        const filterArr = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 17], [0, 18], [0, 19], [0, 20], [0, 21], [0, 22], [0, 23], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 17], [1, 18], [1, 19], [1, 20], [1, 21], [1, 22], [1, 23], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [2, 16], [2, 17], [2, 18], [2, 19], [2, 20], [2, 21], [2, 22], [2, 23], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 18], [3, 19], [3, 20], [3, 21], [3, 22], [3, 23], [4, 0], [4, 1], [4, 22], [4, 23], [9, 0], [9, 23], [10, 0], [10, 1], [10, 22], [10, 23], [11, 0], [11, 1], [11, 22], [11, 23], [12, 0], [12, 1], [12, 22], [12, 23], [13, 0], [13, 1], [13, 22], [13, 23], [14, 0], [14, 23], [18, 11], [18, 12], [19, 11], [19, 12], [20, 11], [20, 12], [21, 10], [21, 11], [21, 12], [21, 13], [22, 10], [22, 11], [22, 12], [22, 13], [23, 9], [23, 10], [23, 11], [23, 12], [23, 13], [23, 14], [20, 10], [20, 13], [0, 16]]
+        for (let i = 0; i < filterArr.length; i++) {
+            const index = filterArr[i][0] * 24 + filterArr[i][1]
+            body[index] = 0
+            // newArr1[index] = 0
+            // newBody[index] = 0
+        }
+
+
+        // const bodyData = []
+        // for (let i = 0; i < 24; i++) {
+        //     for (let j = 0; j < 24; j++) {
+        //         let obj = {}
+        //         // obj.y = i * canvas.width / dataWidth
+        //         // obj.x = j * canvas.height / dataHeight
+        //         // obj.value = resData[i * dataWidth + j]
+        //         // data.push(obj)
+        //         bodyData.push([j * (512 / 24), i * (512 / 24), body[i * 24 + j]])
+        //     }
+        // }
+
+        // const leftData = []
+
+        // for (let i = 0; i < 4; i++) {
+        //     for (let j = 0; j < 4; j++) {
+        //         let obj = {}
+        //         leftData.push([j * (512 / 4), i * (512 / 4), handLeft[i * 4 + j]])
+        //     }
+        // }
+
+        // const rightData = []
+
+        // for (let i = 0; i < 4; i++) {
+        //     for (let j = 0; j < 4; j++) {
+        //         let obj = {}
+        //         rightData.push([j * (512 / 4), i * (512 / 4), handLeft[i * 4 + j]])
+        //     }
+        // }
+
+
+        function initCanvasWH(canvas, canvasWProp, canvasHProp) {
+            const contentWidth = canvas.getBoundingClientRect().width;
+            canvas.width = contentWidth * canvasWProp
+            canvas.height = contentWidth * canvasHProp
+        }
+
+
+
+
+        const WebGLCanvas1 = new WebGLCanvas()
+        const WebGLCanvas2 = new WebGLCanvas()
+        const WebGLCanvas3 = new WebGLCanvas()
+
+        function generateData(arr, canvas, width, height, interp1, interp2, order) {
+            // const resData = [0, 0, 1, 21, 9, 1, 0, 0, 0, 0, 0, 0, 0, 6, 5, 0, 0, 0, 0, 0, 0, 3, 28, 27, 37, 50, 56, 43, 34, 11, 1, 21, 45, 39, 37, 37, 9, 1, 0, 0, 3, 37, 6, 40, 48, 33, 3, 0, 0, 0, 2, 1, 1, 21, 33, 24, 2, 0, 0, 0, 0, 0, 1, 13, 26, 18, 4, 0, 0, 0, 0, 2, 16, 37, 34, 69, 51, 4, 1, 0, 1, 2, 15, 35, 52, 56, 39, 5, 0, 0, 0, 1, 14, 23, 4, 6, 30, 31, 1, 0, 0, 1, 1, 14, 1, 0, 5, 20, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 1, 34, 4, 0, 0, 2, 30, 3, 1, 0, 1, 19, 29, 0, 0, 1, 14, 0, 0, 0, 0, 3, 32, 1, 2, 3, 5, 1, 1, 1, 1, 2, 6]
+
+            initCanvasWH(canvas, interp1, interp2)
+            let resData
+            let resArr = arr
+            resArr = addSide(
+                resArr,
+                height,
+                width,
+                order,
+                order,
+                1
+            );
+            const interpArr = interpSmall(resArr, height + order * 2, width + order * 2, interp1, interp2)
+
+            resData = interpArr
+            const count = 32
+            const data = []
+            // const width = 36, height = 36 * 2
+            const dataWidth = (width + order * 2) * interp1, dataHeight = (height + + order * 2) * interp2
+            for (let i = 0; i < dataHeight; i++) {
+                for (let j = 0; j < dataWidth; j++) {
+                    let obj = {}
+                    obj.y = i * canvas.width / dataWidth
+                    obj.x = j * canvas.height / dataHeight
+                    obj.value = resData[i * dataWidth + j]
+                    // data.push(obj)
+
+                    data.push([j * (canvas.width / dataWidth), i * (canvas.height / dataHeight), resData[i * dataWidth + j]])
+                }
+
+            }
+            return data
+        }
+
+        // const bodyData = generateData(body, bodyCavnas, 24, 24, 1, 2, 2)
+        // const leftData = generateData(handLeft, leftCavnas, 4, 4, 1, 4, 2)
+        // const rightData = generateData(handRight, rightCavnas, 4, 4, 1, 4, 2)
+
+        // function genAllData(bodyArr, leftArr, rightArr, { canvasWidth = 512, canvasHeight = 1024 }) {
+        //     let heightIndex = 0, newArr = []
+        //     for (let index = 0; index < bodyArr.length; index++) {
+        //         {
+        //             const height = 24, width = 24, order = 2, interp1 = 1, interp2 = 2
+        //             const arr = bodyArr[index]
+
+        //             let resArr = arr
+        //             resArr = addSide(
+        //                 resArr,
+        //                 height,
+        //                 width,
+        //                 order,
+        //                 order,
+        //                 1
+        //             );
+        //             const interpArr = interpSmall(resArr, height + order * 2, width + order * 2, interp1, interp2)
+
+        //             resData = interpArr
+
+        //             let dataWidth = 28, dataHeight = 56, canvas = { width: canvasWidth, height: canvasHeight }
+        //             for (let i = 0; i < dataHeight; i++) {
+        //                 for (let j = 0; j < dataWidth; j++) {
+        //                     let obj = {}
+        //                     obj.y = i * canvas.width / dataWidth
+        //                     obj.x = j * canvas.height / dataHeight
+        //                     obj.value = resData[i * dataWidth + j]
+        //                     // data.push(obj)
+
+        //                     newArr.push([j * (canvas.width / dataWidth), canvasHeight * ((index) * 2) + i * (canvas.height / dataHeight), resData[i * dataWidth + j]])
+        //                 }
+
+        //             }
+
+        //         }
+
+        //         {
+        //             const height = 4, width = 4, order = 2, interp1 = 1, interp2 = 4
+        //             const arr = leftArr[index]
+        //             let resArr = arr
+        //             resArr = addSide(
+        //                 resArr,
+        //                 height,
+        //                 width,
+        //                 order,
+        //                 order,
+        //                 1
+        //             );
+        //             const interpArr = interpSmall(resArr, height + order * 2, width + order * 2, interp1, interp2)
+
+        //             resData = interpArr
+
+
+        //             const arr1 = rightArr[index]
+        //             let resArr1 = arr1
+        //             resArr1 = addSide(
+        //                 resArr1,
+        //                 height,
+        //                 width,
+        //                 order,
+        //                 order,
+        //                 1
+        //             );
+        //             const interpArr1 = interpSmall(resArr1, height + order * 2, width + order * 2, interp1, interp2)
+
+        //             resData1 = interpArr1
+
+        //             let dataWidth = 8, dataHeight = 32, canvas = { width: canvasWidth / 2, height: canvasHeight }
+
+        //             for (let i = 0; i < dataHeight; i++) {
+        //                 for (let j = 0; j < dataWidth; j++) {
+
+
+        //                     let obj = {}
+        //                     obj.y = i * canvas.width / dataWidth
+        //                     obj.x = j * canvas.height / dataHeight
+        //                     obj.value = resData[i * dataWidth + j]
+        //                     // data.push(obj)
+
+        //                     newArr.push([j * (canvas.width / dataWidth), canvasHeight * ((index + 1) * 2 - 1) + i * (canvas.height / dataHeight), resData[i * dataWidth + j]])
+
+        //                 }
+
+        //             }
+
+
+
+        //             for (let i = 0; i < dataHeight; i++) {
+        //                 for (let j = 0; j < dataWidth; j++) {
+
+
+        //                     let obj = {}
+        //                     obj.y = i * canvas.width / dataWidth
+        //                     obj.x = j * canvas.height / dataHeight
+        //                     obj.value = resData1[i * dataWidth + j]
+        //                     // data.push(obj)
+
+        //                     newArr.push([canvas.width + j * (canvas.width / dataWidth), canvasHeight * ((index + 1) * 2 - 1) + i * (canvas.height / dataHeight), resData[i * dataWidth + j]])
+
+        //                 }
+
+        //             }
+
+
+
+
+        //         }
+        //     }
+        //     return newArr
+        // }
+
+        function genAllData(dataArr, { canvasWidth = 512, canvasHeight = 1024 }) {
+            let heightIndex = 0, newArr = []
+
+            for (let index = 0; index < dataArr.length; index++) {
+                const bodyArr = dataArr[index][0]
+                const leftArr = dataArr[index][1]
+                const rightArr = dataArr[index][2]
+                {
+                    const height = 24, width = 24, order = 2, interp1 = 1, interp2 = 2
+                    const arr = bodyArr
+
+                    let resArr = arr
+                    resArr = addSide(
+                        resArr,
+                        height,
+                        width,
+                        order,
+                        order,
+                        1
+                    );
+                    const interpArr = interpSmall(resArr, height + order * 2, width + order * 2, interp1, interp2)
+
+                    resData = interpArr
+
+                    let dataWidth = 28, dataHeight = 56, canvas = { width: canvasWidth, height: canvasHeight }
+                    for (let i = 0; i < dataHeight; i++) {
+                        for (let j = 0; j < dataWidth; j++) {
+                            let obj = {}
+                            obj.y = i * canvas.width / dataWidth
+                            obj.x = j * canvas.height / dataHeight
+                            obj.value = resData[i * dataWidth + j]
+                            // data.push(obj)
+
+                            newArr.push([j * (canvas.width / dataWidth), canvasHeight * ((index) * 2) + i * (canvas.height / dataHeight), resData[i * dataWidth + j]])
+                        }
+
+                    }
+
+                }
+
+                {
+                    const height = 4, width = 4, order = 2, interp1 = 1, interp2 = 4
+                    const arr = leftArr
+                    let resArr = arr
+                    resArr = addSide(
+                        resArr,
+                        height,
+                        width,
+                        order,
+                        order,
+                        1
+                    );
+                    const interpArr = interpSmall(resArr, height + order * 2, width + order * 2, interp1, interp2)
+
+                    resData = interpArr
+
+
+                    const arr1 = rightArr
+                    let resArr1 = arr1
+                    resArr1 = addSide(
+                        resArr1,
+                        height,
+                        width,
+                        order,
+                        order,
+                        1
+                    );
+                    const interpArr1 = interpSmall(resArr1, height + order * 2, width + order * 2, interp1, interp2)
+
+                    resData1 = interpArr1
+
+                    let dataWidth = 8, dataHeight = 32, canvas = { width: canvasWidth / 2, height: canvasHeight }
+
+                    for (let i = 0; i < dataHeight; i++) {
+                        for (let j = 0; j < dataWidth; j++) {
+
+
+                            let obj = {}
+                            obj.y = i * canvas.width / dataWidth
+                            obj.x = j * canvas.height / dataHeight
+                            obj.value = resData[i * dataWidth + j]
+                            // data.push(obj)
+
+                            newArr.push([j * (canvas.width / dataWidth), canvasHeight * ((index + 1) * 2 - 1) + i * (canvas.height / dataHeight), resData[i * dataWidth + j]])
+
+                        }
+
+                    }
+
+
+
+                    for (let i = 0; i < dataHeight; i++) {
+                        for (let j = 0; j < dataWidth; j++) {
+
+
+                            let obj = {}
+                            obj.y = i * canvas.width / dataWidth
+                            obj.x = j * canvas.height / dataHeight
+                            obj.value = resData1[i * dataWidth + j]
+                            // data.push(obj)
+
+                            newArr.push([canvas.width + j * (canvas.width / dataWidth), canvasHeight * ((index + 1) * 2 - 1) + i * (canvas.height / dataHeight), resData[i * dataWidth + j]])
+
+                        }
+
+                    }
+
+
+
+
+                }
+            }
+            return newArr
+        }
+
+        // const newArr = genAllData([body, body], [handLeft, handLeft], [handRight, handRight], { canvasHeight: 2048 / 4 / 2, canvasWidth: 512 / 4 })
+        // // console.log(newArr)
+        // var z = WebGLCanvas1.render({
+        //     width: 512 / 4,
+        //     height: 2048 / 4 * 2,
+        //     radius: 20,
+        //     max: 255,
+        //     min: 1,
+        //     filter: 12,
+        //     class: 'body'
+        // }, newArr);
+
+
+
+        // WebGLCanvas3.render({
+        //     width: 512 / 2,
+        //     height: 1024 / 2,
+        //     radius: 20,
+        //     max: 100,
+        //     min: 1,
+        //     filter: 12,
+        //     class: 'body'
+        // }, bodyData);
+
+        // WebGLCanvas1.render({
+        //     width: 32,
+        //     height: 64,
+        //     radius: 20,
+        //     max: 255,
+        //     min: 1,
+        //     filter: 12,
+        //     class: 'left'
+        // }, leftData);
+
+        // WebGLCanvas2.render({
+        //     width: 32,
+        //     height: 64,
+        //     radius: 20,
+        //     max: 255,
+        //     min: 1,
+        //     filter: 12,
+        //     class: 'right'
+        // }, rightData);
+        // for (var i = 0; i < z.length; i++) {
+        //     document.body.appendChild(z[i]);
+        // };
+
+
+
+
+
+        function genHeatmap(idArr, data) {
+
+
+            // props.data = new Array(1024).fill(50)
+
+            let handLeft = data.slice(0, 16)
+
+            let handRight = data.slice(16, 32)
+
+            // let body = data.slice(32, 32 + 24 * 24)
+            // let handLeft = new Array(16).fill(100)
+            // let handRight = new Array(16).fill(100)
+            // const body = new Array(24*24).fill(100)
+
+
+            for (let i = 0; i < 2; i++) {
+                for (let j = 0; j < 4; j++) {
+                    [handLeft[i * 4 + j], handLeft[(3 - i) * 4 + j]] = [handLeft[(3 - i) * 4 + j], handLeft[i * 4 + j],]
+                }
+            }
+            let neck = data.slice(32, 32 + 24 * 5)
+            let back = data.slice(32 + 24 * 5, 32 + 24 * 14)
+            let sit = data.slice(32 + 24 * 14, 32 + 24 * 24)
+
+
+            const body = [...neck, ...back, ...sit,]
+
+            // const filterArr = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [4, 0], [4, 1], [0, 18], [0, 19], [0, 20], [0, 21], [0, 22], [0, 23], [1, 16], [1, 17], [1, 18], [1, 19], [1, 20], [1, 21], [1, 22], [1, 23], [2, 16], [2, 17], [2, 18], [2, 19], [2, 20], [2, 21], [2, 22], [2, 23], [3, 18], [3, 19], [3, 20], [3, 21], [3, 22], [3, 23], [4, 22], [4, 23], [9, 0], [10, 0], [10, 1], [11, 0], [11, 1], [12, 0], [12, 1], [12, 2], [13, 0], [13, 1], [13, 2], [14, 0], [14, 1], [15, 0], [15, 1], [16, 0], [17, 0], [16, 1], [9, 23], [10, 23], [10, 22], [11, 22], [11, 23], [11, 21], [12, 21], [12, 22], [12, 23], [13, 21], [13, 22], [13, 23], [14, 21], [14, 22], [14, 23], [15, 22], [15, 23], [16, 22], [16, 23], [17, 23], [18, 23], [19, 23], [20, 23], [18, 0], [19, 0], [20, 11], [20, 12], [21, 11], [21, 12], [22, 11], [22, 12], [23, 10], [23, 11], [23, 12], [23, 13]]
+
+            const filterArr = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 17], [0, 18], [0, 19], [0, 20], [0, 21], [0, 22], [0, 23], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 17], [1, 18], [1, 19], [1, 20], [1, 21], [1, 22], [1, 23], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [2, 16], [2, 17], [2, 18], [2, 19], [2, 20], [2, 21], [2, 22], [2, 23], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 18], [3, 19], [3, 20], [3, 21], [3, 22], [3, 23], [4, 0], [4, 1], [4, 22], [4, 23], [9, 0], [9, 1], [9, 22], [9, 23], [10, 0], [10, 1], [10, 2], [10, 21], [10, 22], [10, 23], [11, 0], [11, 1], [11, 2], [11, 3], [11, 20], [11, 21], [11, 22], [11, 23], [12, 0], [12, 1], [12, 21], [12, 22], [12, 23], [13, 0], [13, 1], [13, 21], [13, 22], [13, 23], [14, 0], [14, 22], [14, 23], [15, 22], [15, 23], [16, 23], [17, 23], [18, 11], [18, 12], [18, 23], [19, 11], [19, 12], [19, 23], [20, 11], [20, 12], [20, 23], [21, 10], [21, 11], [21, 12], [21, 13], [21, 23], [22, 0], [22, 10], [22, 11], [22, 12], [22, 13], [22, 23], [23, 0], [23, 9], [23, 10], [23, 11], [23, 12], [23, 13], [23, 14], [23, 22], [23, 23], [18, 10], [19, 10], [20, 10], [18, 13], [19, 13], [20, 13], [0, 16], [23, 8], [22, 9], [21, 9], [20, 9], [19, 9], [18, 9], [20, 8], [21, 8], [22, 8], [20, 14], [21, 14], [22, 14]]
+
+
+            for (let i = 0; i < filterArr.length; i++) {
+                const index = filterArr[i][0] * 24 + filterArr[i][1]
+                body[index] = 0
+                // newArr1[index] = 0
+                // newBody[index] = 0
+            }
+
+            idArr.forEach((id, index) => {
+                // const bodyCavnas = document.getElementById(id)
+
+                const bodyCavnas = document.getElementById(`body${id}`)
+                const leftCavnas = document.getElementById(`left${id}`)
+                const rightCavnas = document.getElementById(`right${id}`)
+                const bodyData = generateData(body, bodyCavnas, 24, 24, 1, 2, 2)
+                const leftData = generateData(handLeft, leftCavnas, 4, 4, 1, 4, 2)
+                const rightData = generateData(handRight, rightCavnas, 4, 4, 1, 4, 2)
+
+                // var z = WebGLCanvas.render({
+                //     width: 512,
+                //     height: 512,
+                //     radius: 50,
+                //     max: 255,
+                //     min: 1,
+                //     filter: 12,
+                //     class: 'body'
+                // }, bodyData);
+
+                // const WebGLCanvas1 = new WebGLCanvas()
+                // const WebGLCanvas2 = new WebGLCanvas()
+                // const WebGLCanvas3 = new WebGLCanvas()
+                const WebGLCanvas1 = map[index * 3 + 0]
+                const WebGLCanvas2 = map[index * 3 + 1]
+                const WebGLCanvas3 = map[index * 3 + 2]
+                WebGLCanvas3.render({
+                    width: 64,
+                    height: 128,
+                    radius: 5,
+                    max: 100,
+                    min: 1,
+                    filter: 12,
+                    class: `body${id}`
+                }, bodyData);
+
+                WebGLCanvas1.render({
+                    width: 32,
+                    height: 128,
+                    radius: 20,
+                    max: 255,
+                    min: 1,
+                    filter: 12,
+                    class: `left${id}`
+                }, leftData);
+
+                WebGLCanvas2.render({
+                    width: 32,
+                    height: 128,
+                    radius: 20,
+                    max: 255,
+                    min: 1,
+                    filter: 12,
+                    class: `right${id}`
+                }, rightData);
+
+                // const bodyCtx = bodyCavnas.getContext('2d')
+                // bodyCtx.drawImage(bodyImg[0], 0, 0, bodyCavnas.width, bodyCavnas.height);
+
+
+            })
+        }
+
+        let map = {}
+        for (let i = 0; i < 9; i++) {
+            map[i] = new WebGLCanvas()
+        }
+        document.body.append(tplCanvas)
+        const arrs = [['body', 'left', 'right'], ['body1', 'left1', 'right1'], ['body2', 'left2', 'right2'], ['body3', 'left3', 'right3'], ['body4', 'left4', 'right4'], ['body5', 'left5', 'right5'], ['body6', 'left6', 'right6'], ['body7', 'left7', 'right7']]
+        arrs.forEach(arr => {
+            arr.forEach(a => {
+                const canvas = document.getElementById(a)
+
+                if (a.includes('body')) {
+                    initCanvasWH(canvas, 1, 2)
+                }
+                else {
+                    initCanvasWH(canvas, 1, 4)
+                }
+
+            })
+        })
+
+
+        function genData(value) {
+            const props = {}
+            props.data = new Array(1024).fill(value)
+            // props.data = new Array(1024).fill(50)
+            let handLeft = props.data.slice(0, 16)
+
+            let handRight = props.data.slice(16, 32)
+
+            // let body = props.data.slice(32, 32 + 24 * 24)
+            // let handLeft = new Array(16).fill(100)
+            // let handRight = new Array(16).fill(100)
+            // const body = new Array(24*24).fill(100)
+
+
+            for (let i = 0; i < 2; i++) {
+                for (let j = 0; j < 4; j++) {
+                    [handLeft[i * 4 + j], handLeft[(3 - i) * 4 + j]] = [handLeft[(3 - i) * 4 + j], handLeft[i * 4 + j],]
+                }
+            }
+            let neck = props.data.slice(32, 32 + 24 * 5)
+            let back = props.data.slice(32 + 24 * 5, 32 + 24 * 14)
+            let sit = props.data.slice(32 + 24 * 14, 32 + 24 * 24)
+
+
+            const body = [...neck, ...back, ...sit,]
+            const filterArr = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 17], [0, 18], [0, 19], [0, 20], [0, 21], [0, 22], [0, 23], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 17], [1, 18], [1, 19], [1, 20], [1, 21], [1, 22], [1, 23], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [2, 16], [2, 17], [2, 18], [2, 19], [2, 20], [2, 21], [2, 22], [2, 23], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 18], [3, 19], [3, 20], [3, 21], [3, 22], [3, 23], [4, 0], [4, 1], [4, 22], [4, 23], [9, 0], [9, 1], [9, 22], [9, 23], [10, 0], [10, 1], [10, 2], [10, 21], [10, 22], [10, 23], [11, 0], [11, 1], [11, 2], [11, 3], [11, 20], [11, 21], [11, 22], [11, 23], [12, 0], [12, 1], [12, 21], [12, 22], [12, 23], [13, 0], [13, 1], [13, 21], [13, 22], [13, 23], [14, 0], [14, 22], [14, 23], [15, 22], [15, 23], [16, 23], [17, 23], [18, 11], [18, 12], [18, 23], [19, 11], [19, 12], [19, 23], [20, 11], [20, 12], [20, 23], [21, 10], [21, 11], [21, 12], [21, 13], [21, 23], [22, 0], [22, 10], [22, 11], [22, 12], [22, 13], [22, 23], [23, 0], [23, 9], [23, 10], [23, 11], [23, 12], [23, 13], [23, 14], [23, 22], [23, 23], [18, 10], [19, 10], [20, 10], [18, 13], [19, 13], [20, 13], [0, 16], [23, 8], [22, 9], [21, 9], [20, 9], [19, 9], [18, 9], [20, 8], [21, 8], [22, 8], [20, 14], [21, 14], [22, 14]]
+
+
+            for (let i = 0; i < filterArr.length; i++) {
+                const index = filterArr[i][0] * 24 + filterArr[i][1]
+                body[index] = 0
+                // newArr1[index] = 0
+                // newBody[index] = 0
+            }
+            return [body, handLeft, handRight]
+        }
+
+
+            let data = genData(Math.random() * 100)
+            let data1 = genData(Math.random() * 100)
+            let data2 = genData(Math.random() * 100)
+            let data3 = genData(Math.random() * 100)
+            let data4 = genData(Math.random() * 100)
+            let data5 = genData(Math.random() * 100)
+            let data6 = genData(Math.random() * 100)
+            let data7 = genData(Math.random() * 100)
+
+        const range = document. getElementById('range')
+        range.addEventListener('input' ,(e) => {
+            console.log(e.target.value)
+             data = genData(parseInt(e.target.value))
+             data1 = genData(parseInt(e.target.value))
+             data2 = genData(parseInt(e.target.value))
+             data3 = genData(parseInt(e.target.value))
+             data4 = genData(parseInt(e.target.value))
+             data5 = genData(parseInt(e.target.value))
+             data6 = genData(parseInt(e.target.value))
+             data7 = genData(parseInt(e.target.value))
+        })
+
+        setInterval(() => {
+            const date = new Date().getTime()
+            // const data = new Array(1024).fill(Math.random() * 200)
+            // const props = {}
+            // props.data = new Array(1024).fill(Math.random() * 100)
+            // // props.data = new Array(1024).fill(50)
+            // let handLeft = props.data.slice(0, 16)
+
+            // let handRight = props.data.slice(16, 32)
+
+            // // let body = props.data.slice(32, 32 + 24 * 24)
+            // // let handLeft = new Array(16).fill(100)
+            // // let handRight = new Array(16).fill(100)
+            // // const body = new Array(24*24).fill(100)
+
+
+            // for (let i = 0; i < 2; i++) {
+            //     for (let j = 0; j < 4; j++) {
+            //         [handLeft[i * 4 + j], handLeft[(3 - i) * 4 + j]] = [handLeft[(3 - i) * 4 + j], handLeft[i * 4 + j],]
+            //     }
+            // }
+            // let neck = props.data.slice(32, 32 + 24 * 5)
+            // let back = props.data.slice(32 + 24 * 5, 32 + 24 * 14)
+            // let sit = props.data.slice(32 + 24 * 14, 32 + 24 * 24)
+
+
+            // const body = [...neck, ...back, ...sit,]
+            // const filterArr = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 17], [0, 18], [0, 19], [0, 20], [0, 21], [0, 22], [0, 23], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 17], [1, 18], [1, 19], [1, 20], [1, 21], [1, 22], [1, 23], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [2, 16], [2, 17], [2, 18], [2, 19], [2, 20], [2, 21], [2, 22], [2, 23], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 18], [3, 19], [3, 20], [3, 21], [3, 22], [3, 23], [4, 0], [4, 1], [4, 22], [4, 23], [9, 0], [9, 1], [9, 22], [9, 23], [10, 0], [10, 1], [10, 2], [10, 21], [10, 22], [10, 23], [11, 0], [11, 1], [11, 2], [11, 3], [11, 20], [11, 21], [11, 22], [11, 23], [12, 0], [12, 1], [12, 21], [12, 22], [12, 23], [13, 0], [13, 1], [13, 21], [13, 22], [13, 23], [14, 0], [14, 22], [14, 23], [15, 22], [15, 23], [16, 23], [17, 23], [18, 11], [18, 12], [18, 23], [19, 11], [19, 12], [19, 23], [20, 11], [20, 12], [20, 23], [21, 10], [21, 11], [21, 12], [21, 13], [21, 23], [22, 0], [22, 10], [22, 11], [22, 12], [22, 13], [22, 23], [23, 0], [23, 9], [23, 10], [23, 11], [23, 12], [23, 13], [23, 14], [23, 22], [23, 23], [18, 10], [19, 10], [20, 10], [18, 13], [19, 13], [20, 13], [0, 16], [23, 8], [22, 9], [21, 9], [20, 9], [19, 9], [18, 9], [20, 8], [21, 8], [22, 8], [20, 14], [21, 14], [22, 14]]
+
+
+            // for (let i = 0; i < filterArr.length; i++) {
+            //     const index = filterArr[i][0] * 24 + filterArr[i][1]
+            //     body[index] = 0
+            //     // newArr1[index] = 0
+            //     // newBody[index] = 0
+            // }
+            // const data = genData(Math.random() * 100)
+            // const data1 = genData(Math.random() * 100)
+            // const data2 = genData(Math.random() * 100)
+            // const data3 = genData(Math.random() * 100)
+            // const data4 = genData(Math.random() * 100)
+            // const data5 = genData(Math.random() * 100)
+            // const data6 = genData(Math.random() * 100)
+            // const data7 = genData(Math.random() * 100)
+
+
+            // const newArr = genAllData([body, body, body, body, body, body, body, body,], [handLeft, handLeft, handLeft, handLeft, handLeft, handLeft, handLeft, handLeft,], [handRight, handRight, handRight, handRight, handRight, handRight, handRight, handRight,], { canvasHeight: 2048 / 4 / 2, canvasWidth: 512 / 4 })
+            // const newArr = genAllData([data[0], data1[0], data2[0], data3[0], data4[0], data5[0], data6[0], data7[0],], [data[1], data1[1], data2[1], data3[1], data4[1], data5[1], data6[1], data7[1],], [data[2], data1[2], data2[2], data3[2], data4[2], data5[2], data6[2], data7[2],], { canvasHeight: 2048 / 4 / 2, canvasWidth: 512 / 4 })
+            const newArr = genAllData([data , data1 , data2 ,data3, data4,data5,data6,data7], { canvasHeight: 2048 / 4 / 2, canvasWidth: 512 / 4 })
+
+            // console.log(newArr)
+            var z = WebGLCanvas1.render({
+                width: 512 / 4,
+                height: 2048 / 4 * 8,
+                radius: 20,
+                max: 255,
+                min: 1,
+                filter: 12,
+                class: 'body'
+            }, newArr);
+
+
+            // const arrs = [['body', 'left', 'right'], ['body1', 'left1', 'right1'], ['body2', 'left2', 'right2'], ['body3', 'left3', 'right3']]
+            arrs.forEach((arr, index) => {
+                for (let i = 0; i < 3; i++) {
+                    const canvas = document.getElementById(arr[i])
+                    const bodyCtx = canvas.getContext('2d')
+                    canvas.style.background = 'transparent'
+                    bodyCtx.imageSmoothingEnabled = false
+                    const width = canvas.getBoundingClientRect().width
+                    const height = canvas.getBoundingClientRect().height
+                    bodyCtx.clearRect(0, 0, canvas.width, canvas.height)
+                    const bodyY = index * 256 * 2
+                    const handY = ((index + 1) * 2 - 1) * 256
+                    switch (i) {
+                        case 0:
+                            // bodyCtx.drawImage(z[0], 0, 0, canvas.width, canvas.height);
+
+                            bodyCtx.drawImage(z[0], 0, 0 + bodyY, 128, 256, 0, 0, canvas.width, canvas.height);
+                            break;
+                        case 1:
+                            bodyCtx.drawImage(z[0], 0, handY, 64, 256, 0, 0, canvas.width, canvas.height);
+                        case 2:
+                            bodyCtx.drawImage(z[0], 64, handY, 64, 256, 0, 0, canvas.width, canvas.height);
+                    }
+                }
+                // const bodyCtx = bodyCavnas.getContext('2d')
+                // bodyCtx.drawImage(bodyImg[0], 0, 0, bodyCavnas.width, bodyCavnas.height);
+            })
+
+
+            console.log(new Date().getTime() - date)
+        }, 20)
+
+        // setInterval(() => {
+        //     var fackData = [];
+        //     const count = Math.round(10000*Math.random())
+        //     for (var i = 0; i < count; i++) {
+        //         fackData.push([Math.random() * 2048, Math.random() * 900, Math.floor(Math.random() * 600)]);
+        //     }
+        //     // console.log(fackData)
+        //     var z = WebGLCanvas.render({
+        //         width: 640,
+        //         height: 640,
+        //         radius: 25,
+        //         max: 800,
+        //         min: 100,
+        //         filter: 12
+        //     }, fackData);
+        //     for (var i = 0; i < z.length; i++) {
+        //         // document.body.appendChild(z[i]);
+        //     };
+        //     const newDate = new Date().getTime()
+        //     WebGLCanvas.reset({
+        //         width: 640,
+        //         height: 640,
+        //         radius: 25,//10 + Math.random() * 20,
+        //         max: 800,
+        //         min: 100,
+        //         filter: 12
+        //     }, z);
+        //     // console.log(new Date().getTime() - newDate)
+        // }, 50)
+    </script>
+</body>
+
+</html>

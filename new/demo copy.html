@@ -615,9 +615,9 @@
         })
 
 
-        function genData(value) {
+        function genData(arr) {
             const props = {}
-            props.data = new Array(1024).fill(value)
+            props.data = arr
             // props.data = new Array(1024).fill(50)
             let handLeft = props.data.slice(0, 16)
 

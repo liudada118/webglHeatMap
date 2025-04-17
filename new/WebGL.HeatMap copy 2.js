@@ -597,3 +597,77 @@ function create_vbo(data) {
     // 返回生成的VBO
     return vbo;
 }
+
+
+
+
+
+
+function hexToVec3(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = ((bigint >> 16) & 0xFF) / 255;
+    const g = ((bigint >>  8) & 0xFF) / 255;
+    const b = ( bigint        & 0xFF) / 255;
+    return [r, g, b];
+  }
+  
+  function generateGlslColorMap(stops) {
+    // 1) 拿到所有键，转成数字并排序
+    const points = Object.keys(stops)
+      .map(parseFloat)
+      .sort((a, b) => a - b);
+  
+    const lines = [];
+
+  
+    for (let i = 0; i < points.length; i++) {
+      const num = points[i];
+      const key = num.toString();               // "0", "0.08", "0.17", ...
+      const [r0, g0, b0] = hexToVec3(stops[key]);
+  
+      if (i === 0) {
+        // 第一段
+        lines.push(`    if(pct <= ${num}){\\`);
+        lines.push(`        return vec3(${r0.toFixed(3)}, ${g0.toFixed(3)}, ${b0.toFixed(3)});\\`);
+      } else {
+        const prev = points[i - 1];
+        const keyPrev = prev.toString();
+        const [rp, gp, bp] = hexToVec3(stops[keyPrev]);
+        lines.push(`    }else if(pct <= ${num}){\\`);
+        lines.push(`        float t = (pct - ${prev}) / (${num} - ${prev});\\`);
+        lines.push(
+          `        return mix(vec3(${rp.toFixed(3)}, ${gp.toFixed(3)}, ${bp.toFixed(3)}), ` +
+          `vec3(${r0.toFixed(3)}, ${g0.toFixed(3)}, ${b0.toFixed(3)}), t);\\`
+        );
+      }
+    }
+  
+    // 最后一段
+    const last = points[points.length - 1];
+    const [rl, gl_, bl] = hexToVec3(stops[last.toString()]);
+    lines.push(`    }else{\\`);
+    lines.push(`        return vec3(${rl.toFixed(3)}, ${gl_.toFixed(3)}, ${bl.toFixed(3)});\\`);
+    lines.push(`    }\\`);
+    lines.push(`}`);
+  
+    return lines.join("\n");
+  }
+  
+  // 调用示例
+  const stops = {
+    0.00: "#4192fe",
+    0.08: "#49aaff",
+    0.17: "#51c6ff",
+    0.25: "#4ddff5",
+    0.33: "#34f6db",
+    0.42: "#6cffb9",
+    0.50: "#c5ff8b",
+    0.58: "#fdf655",
+    0.67: "#ffda41",
+    0.75: "#ffb54a",
+    0.83: "#ff9555",
+    0.92: "#ff7665",
+    1.00: "#ff5e70"
+  };
+  
+  console.log(generateGlslColorMap(stops));
