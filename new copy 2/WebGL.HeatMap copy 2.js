@@ -130,7 +130,7 @@ class WebGLCanvas {
         void main(void){\
             vec4 c=texture2D(u_Sampler, vec2(gl_FragCoord.x/u_resolution[0],gl_FragCoord.y/u_resolution[1]));\
             float p_alpha=c[3];\
-            if(p_alpha>0.0){\
+            if(p_alpha>0.25){\
                  gl_FragColor = vec4(getColorByPercent(p_alpha),1) ;\
             }\
         }`
